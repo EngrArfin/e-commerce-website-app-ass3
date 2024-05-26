@@ -11,11 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/joi": "^17.2.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "joi": "^17.13.1",
     "mongoose": "^8.4.0"
   },
   "devDependencies": {
+    "@types/node": "^20.12.12",
     "typescript": "^5.4.5"
   }
 }
