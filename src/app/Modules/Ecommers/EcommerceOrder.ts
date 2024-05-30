@@ -9,7 +9,7 @@ export interface IOrder extends Document {
 
 const orderSchema = new Schema<IOrder>({
   email: { type: String, required: true },
-  productId: { type: mongoose.Types.ObjectId, required: true, ref: 'Product' },
+  productId: { type: Schema.Types.ObjectId, required: true, ref: 'Product' },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
 })

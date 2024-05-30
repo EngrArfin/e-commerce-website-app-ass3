@@ -1,15 +1,17 @@
 import { Request, Response } from 'express'
 
 import Joi from 'joi'
-import Product from '../Modules/Ecommers/EcommerceProductMaintain'
+import Product from '../Ecommers/EcommerceProductMaintain'
 
 const productSchema = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
+
   price: Joi.number().required(),
   category: Joi.string().required(),
   tags: Joi.array().items(Joi.string()).required(),
   variants: Joi.array()
+
     .items(
       Joi.object({
         type: Joi.string().required(),
@@ -34,13 +36,11 @@ export const createProduct = async (req: Request, res: Response) => {
     const product = new Product(req.body)
     await product.save()
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: 'Product created successfully!',
-        data: product,
-      })
+    res.status(201).json({
+      success: true,
+      message: 'Product created successfully!',
+      data: product,
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error', error })
   }
@@ -49,13 +49,11 @@ export const createProduct = async (req: Request, res: Response) => {
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.find()
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Products fetched successfully!',
-        data: products,
-      })
+    res.status(200).json({
+      success: true,
+      message: 'Products fetched successfully!',
+      data: products,
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error', error })
   }
@@ -69,13 +67,11 @@ export const getProductById = async (req: Request, res: Response) => {
         .status(404)
         .json({ success: false, message: 'Product not found' })
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Product fetched successfully!',
-        data: product,
-      })
+    res.status(200).json({
+      success: true,
+      message: 'Fetched Product  successfully!',
+      data: product,
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error', error })
   }
@@ -99,13 +95,11 @@ export const updateProduct = async (req: Request, res: Response) => {
         .status(404)
         .json({ success: false, message: 'Product not found' })
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Product updated successfully!',
-        data: product,
-      })
+    res.status(200).json({
+      success: true,
+      message: 'Product updated successfully!',
+      data: product,
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error', error })
   }
@@ -133,13 +127,11 @@ export const searchProducts = async (req: Request, res: Response) => {
     const products = await Product.find({
       name: { $regex: searchTerm, $options: 'i' },
     })
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: `Products matching search term '${searchTerm}' fetched successfully!`,
-        data: products,
-      })
+    res.status(200).json({
+      success: true,
+      message: `Products matching search term '${searchTerm}' fetched successfully!`,
+      data: products,
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error', error })
   }

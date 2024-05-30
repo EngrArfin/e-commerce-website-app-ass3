@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser'
-import productRoutes from './app/Routers/productRoutes'
-import orderRoutes from './app/Routers/orderRoutes'
-import connectDB from './app/Modules/Ecommers/connection'
+import productRoutes from './app/Modules/Routers/productRoutes'
+import orderRoutes from './app/Modules/Routers/orderRoutes'
+import connectDB from './app/Modules/Ecommers/Connection'
 
 import express, { Application, Request, Response } from 'express'
 import cors from 'cors'

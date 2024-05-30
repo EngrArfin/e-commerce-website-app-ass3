@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 
 import Joi from 'joi'
-import Product from '../Modules/Ecommers/EcommerceProductMaintain'
-import Order from '../Modules/Ecommers/EcommerceOrder'
+import Product from '../Ecommers/EcommerceProductMaintain'
+import Order from '../Ecommers/EcommerceOrder'
 
 const orderSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -23,15 +23,13 @@ export const createOrder = async (req: Request, res: Response) => {
     if (!product)
       return res
         .status(404)
-        .json({ success: false, message: 'Product not found' })
+        .json({ success: false, message: 'Product no found' })
 
     if (product.inventory.quantity < req.body.quantity) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: 'Insufficient quantity available in inventory',
-        })
+      return res.status(400).json({
+        success: false,
+        message: 'Insufficient quantity available ',
+      })
     }
 
     product.inventory.quantity -= req.body.quantity
@@ -43,13 +41,11 @@ export const createOrder = async (req: Request, res: Response) => {
     const order = new Order(req.body)
     await order.save()
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: 'Order created successfully!',
-        data: order,
-      })
+    res.status(201).json({
+      success: true,
+      message: 'Order created successfully!',
+      data: order,
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error', error })
   }
@@ -58,13 +54,11 @@ export const createOrder = async (req: Request, res: Response) => {
 export const getAllOrders = async (req: Request, res: Response) => {
   try {
     const orders = await Order.find()
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Orders fetched successfully!',
-        data: orders,
-      })
+    res.status(200).json({
+      success: true,
+      message: 'Orders fetched successfully!',
+      data: orders,
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error', error })
   }
@@ -74,13 +68,11 @@ export const getOrdersByEmail = async (req: Request, res: Response) => {
   try {
     const email = req.query.email as string
     const orders = await Order.find({ email })
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Orders fetched successfully for user email!',
-        data: orders,
-      })
+    res.status(200).json({
+      success: true,
+      message: 'Orders fetched successfully for user email!',
+      data: orders,
+    })
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error', error })
   }
